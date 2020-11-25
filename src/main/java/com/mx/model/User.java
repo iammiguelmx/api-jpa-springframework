@@ -24,6 +24,9 @@ public class User implements Serializable {
     @Getter @Setter
     private boolean enabled;
 
+    @Getter @Setter
+    private String email;
+
     @Embedded  @Getter @Setter
     private Address address;
 

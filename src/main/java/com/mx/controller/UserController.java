@@ -1,6 +1,7 @@
 package com.mx.controller;
 
 import com.mx.model.Customer;
+import com.mx.model.Mail;
 import com.mx.model.User;
 import com.mx.repository.UserRepository;
 import com.mx.ults.EmailSenderService;
@@ -13,9 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @CrossOrigin
 @RestController
@@ -33,15 +32,20 @@ public class UserController {
 
     @PostMapping("/add")
     public ResponseEntity<User> addUser(@Valid @RequestBody User user) {
+        Mail mail = new Mail();
         try {
-            User _user = userRepository
-                    .save(new
-                            User
-                            (user.getId(), user.getUsername(),
-                                    user.getPassword(),
-                                    user.getRole(),
-                                    user.isEnabled(), user.getAddress(), user.getCompany()));
+            User _user = userRepository.save(new
+                            User(user.getId(), user.getUsername(),
+                                    user.getPassword(),user.getRole(),
+                                    user.isEnabled(), user.getEmail(), user.getAddress(), user.getCompany()));
             log.info("START... Sending email");
+            mail.setFrom("miguel.cam.mx@gmail.com");
+            mail.setMailTo(user.getEmail());
+            mail.setSubject("Welcome .....");
+            Map<String, Object> modelMail = new HashMap<>();
+            modelMail.put("name", _user.getUsername());
+            mail.setProps(modelMail);
+            emailService.sendEmail(mail, "homeNotSignedIn");
             return new ResponseEntity<>(_user, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

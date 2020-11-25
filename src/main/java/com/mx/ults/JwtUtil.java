@@ -61,7 +61,7 @@ public class JwtUtil implements Serializable {
 
     private String doGenerateToken(Map<String, Object> claims, String subject) {
         //The JWT signature algorithm we will be using to sign the token
-        SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
+        SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS512;
         return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY*1000)).
                         signWith(signatureAlgorithm, secret).compact();
