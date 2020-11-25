@@ -13,6 +13,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin
 @RestController
@@ -32,11 +35,42 @@ public class UserController {
     public ResponseEntity<User> addUser(@Valid @RequestBody User user) {
         try {
             User _user = userRepository
-                    .save(new User(user.getId(), user.getUsername(), user.getPassword(), user.getRole(), user.isEnabled()));
+                    .save(new
+                            User
+                            (user.getId(), user.getUsername(),
+                                    user.getPassword(),
+                                    user.getRole(),
+                                    user.isEnabled(), user.getAddress(), user.getCompany()));
             log.info("START... Sending email");
             return new ResponseEntity<>(_user, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/showAll")
+    public ResponseEntity<List<User>> getAll(@RequestParam(required = false) String title) {
+        try {
+            List<User> users = new ArrayList<User>();
+            if (title == null)
+                userRepository.findAll().forEach(users::add);
+            else
+            if (users.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(users, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<HttpStatus> deleteUser(@PathVariable("id") long id) {
+        try {
+            userRepository.deleteById(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

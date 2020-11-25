@@ -8,7 +8,6 @@ import java.io.Serializable;
 @Table(name = "users")
 public class User implements Serializable {
 
-
     @Id @Getter @Setter
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -24,5 +23,11 @@ public class User implements Serializable {
 
     @Getter @Setter
     private boolean enabled;
+
+    @Embedded  @Getter @Setter
+    private Address address;
+
+    @Embedded  @Getter @Setter
+    private Company company;
 
 }
