@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://ec2-54-156-53-71.compute-1.amazonaws.com:5432/d77371nspdgtij?user=cirhckeqwrnuup&password=340d648da345429d7d9902f881409d530ca10d5b30369c1cb074bb872dd4c2fd&sslmode=require
+
+
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"  #<2>
+  endpoint:
+    health:
+      show-details: ALWAYS
+
