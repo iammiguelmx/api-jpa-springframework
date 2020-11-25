@@ -1,17 +1,15 @@
 package com.mx.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
-@Entity @ToString @AllArgsConstructor
+@Entity @ToString @AllArgsConstructor @NoArgsConstructor
 public class Customer implements Serializable {
 
     @Id @Getter @Setter
@@ -19,11 +17,11 @@ public class Customer implements Serializable {
     private Long id;
 
     @Getter @Setter
+    @NotBlank(message = "firstName is mandatory")
     private String firstName;
 
     @Getter @Setter
+    @NotBlank(message = "lastName is mandatory")
     private String lastName;
-
-    protected Customer() {}
 
 }

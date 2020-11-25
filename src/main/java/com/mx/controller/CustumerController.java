@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import javax.validation.Valid;
 
 @CrossOrigin
 @RestController
@@ -24,7 +25,6 @@ public class CustumerController {
     public ResponseEntity<List<Customer>> getAll(@RequestParam(required = false) String title) {
         try {
             List<Customer> tutorials = new ArrayList<Customer>();
-
             if (title == null)
                 custumerRepository.findAll().forEach(tutorials::add);
             else
@@ -38,7 +38,7 @@ public class CustumerController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Customer> addCustumer(@RequestBody Customer customer) {
+    public ResponseEntity<Customer> addCustumer(@Valid @RequestBody Customer customer) {
         try {
             Customer _custumer = custumerRepository
                     .save(new Customer(customer.getId(), customer.getFirstName(), customer.getLastName()));
