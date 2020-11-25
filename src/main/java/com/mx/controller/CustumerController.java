@@ -3,6 +3,7 @@ package com.mx.controller;
 
 import com.mx.model.Customer;
 import com.mx.repository.CustumerRepository;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import javax.validation.Valid;
 @CrossOrigin
 @RestController
 @RequestMapping("/api/custumers")
+@Api(tags = "Custumers", description = "Enpoint for Custumers")
 public class CustumerController {
 
     @Autowired

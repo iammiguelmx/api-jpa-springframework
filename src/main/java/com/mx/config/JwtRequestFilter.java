@@ -1,10 +1,10 @@
 package com.mx.config;
 
 import com.mx.ults.JwtUtil;
-import com.mx.ults.MyUserDetailsService;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 
@@ -24,7 +24,7 @@ import java.io.IOException;
 public class JwtRequestFilter extends OncePerRequestFilter {
 
     @Autowired
-    private MyUserDetailsService myUserDetailsService;
+    private UserDetailsService myUserDetailsService;
 
     @Autowired
     private JwtUtil jwtUtil;

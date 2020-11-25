@@ -16,10 +16,6 @@ management:
     web:
       exposure:
         include: "*"  #<2>
-  endpoint:
-    health:
-      show-details: ALWAYS
-
 server:
   port: 8080 # This is the default port anyway, but you can change it here
 
@@ -28,3 +24,4 @@ security:
     token:
       secret-key: secret-key
       expire-length: 300000 # 5 minutes duration by default: 5 minutes * 60 seconds * 1000 miliseconds
+
